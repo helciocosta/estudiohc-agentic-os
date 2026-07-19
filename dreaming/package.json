@@ -1,0 +1,17 @@
+{
+  "name": "estudiohc-dreaming",
+  "version": "0.1.0",
+  "description": "Dreaming Engine — Análise 24/7 de conversas, padrões e insights",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dream": "node dreamer.js",
+    "last": "node dreamer.js --last",
+    "report": "node report.js",
+    "schedule": "bash schedule.sh"
+  },
+  "dependencies": {
+    "@framers/agentos": "^0.9.156",
+    "better-sqlite3": "^12.11.1"
+  }
+}

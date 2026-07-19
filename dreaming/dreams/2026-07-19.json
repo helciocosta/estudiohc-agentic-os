@@ -1,0 +1,184 @@
+{
+  "date": "2026-07-19",
+  "timestamp": 1784433667883,
+  "periodStart": "2026-07-18T04:01:07.883Z",
+  "periodEnd": "2026-07-19T04:01:07.883Z",
+  "stats": {
+    "sessions": 9,
+    "messages": 484,
+    "filesChanged": 2914,
+    "diffsGenerated": 2974
+  },
+  "usage": {
+    "totalTokensInput": 1264591,
+    "totalTokensOutput": 124783,
+    "totalTokens": 1389374,
+    "totalCost": 0,
+    "topModels": [
+      [
+        "{\"id\":\"deepseek-v4-flash-free\",\"providerID\":\"opencode\",\"variant\":\"default\"}",
+        3
+      ],
+      [
+        "{\"id\":\"claude-haiku-4-5\",\"providerID\":\"anthropic\",\"variant\":\"default\"}",
+        3
+      ],
+      [
+        "{\"id\":\"deepseek-v4-flash-free\",\"providerID\":\"opencode\"}",
+        3
+      ]
+    ],
+    "topAgents": [
+      [
+        "Morpheus (Ultraworker)",
+        5
+      ],
+      [
+        "trinity",
+        2
+      ],
+      [
+        "explore",
+        1
+      ],
+      [
+        "operator",
+        1
+      ]
+    ]
+  },
+  "patterns": {
+    "peakHour": {
+      "hour": 15,
+      "sessions": 2
+    },
+    "topTopics": [
+      [
+        "session",
+        5
+      ],
+      [
+        "subagent)",
+        4
+      ],
+      [
+        "find",
+        2
+      ],
+      [
+        "(@trinity",
+        2
+      ],
+      [
+        "openclaw",
+        2
+      ],
+      [
+        "agent",
+        1
+      ],
+      [
+        "tools",
+        1
+      ],
+      [
+        "(@explore",
+        1
+      ],
+      [
+        "2026-07-19t01:35:19.275z",
+        1
+      ],
+      [
+        "explore",
+        1
+      ]
+    ],
+    "topFiles": [
+      [
+        ".hermes/cron/ticker_heartbeat",
+        8
+      ],
+      [
+        ".hermes/cron/ticker_last_success",
+        8
+      ],
+      [
+        ".hermes/state/gateway.heartbeat",
+        8
+      ],
+      [
+        ".omniroute/logs/application/app.log",
+        8
+      ],
+      [
+        ".omniroute/storage.sqlite-shm",
+        8
+      ],
+      [
+        ".omniroute/storage.sqlite-wal",
+        8
+      ],
+      [
+        ".xsession-errors",
+        7
+      ],
+      [
+        ".claude/transcripts/ses_089ce67acffeLqsNELjRRTsD1j.jsonl",
+        4
+      ],
+      [
+        ".hermes/channel_directory.json",
+        4
+      ],
+      [
+        ".hermes/state.db-shm",
+        4
+      ],
+      [
+        ".claude/transcripts/ses_08a2a231bffeFkju5ZfKz14sEC.jsonl",
+        3
+      ],
+      [
+        ".openclaw/state/openclaw.sqlite",
+        2
+      ],
+      [
+        ".hermes/.update_check",
+        1
+      ],
+      [
+        ".claude/transcripts/ses_0898b694effeS2XHLsxkNnwSfm.jsonl",
+        1
+      ],
+      [
+        ".claude/transcripts/ses_0898be4afffeNJjhtIgoetAPZD.jsonl",
+        1
+      ],
+      [
+        ".bun/install/cache/0aca95afb685c364.npm",
+        1
+      ],
+      [
+        ".bun/install/cache/223d5703727dc123.npm",
+        1
+      ],
+      [
+        ".bun/install/cache/3dec814fa9c5b385.npm",
+        1
+      ],
+      [
+        ".bun/install/cache/41c419682cdc0c43.npm",
+        1
+      ],
+      [
+        ".bun/install/cache/4214a5bcf0742c38.npm",
+        1
+      ]
+    ]
+  },
+  "insights": {
+    "summary": "```json\n{\n  \"dream\": {\n    \"title\": \"Period 9 — The Buried Worker\",\n    \"summary\": \"The Agentic OS logged 9 sessions of extreme contextual strain: 1.26M input tokens processed against a backdrop of 2,974 mutations. This is not exploratory chatter — it is a deep, continuous build cycle where the system reads its own runtime traces faster than it writes code.\",\n    \"patterns_detected\": [\n      \"**Always-On Feedback Loop:** The top files are `.hermes/cron/ticker_heartbeat` and `.omniroute/logs/appl"
+  },
+  "model": "oc/deepseek-v4-flash-free"
+}

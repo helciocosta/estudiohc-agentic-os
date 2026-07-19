@@ -7,7 +7,7 @@
     "status": "node scripts/status.js",
     "f1:codegraph": "cd code-graph && npm run setup",
     "f2:pantheon": "cd agents && npm run setup-pantheon",
-    "f3:dreaming": "cd dreaming && npm run setup",
+    "f3:dreaming": "cd dreaming && npm run dream",
     "f4:mission": "cd mission-control && npm run setup",
     "docs": "cat docs/ARCHITECTURE.md"
   },
