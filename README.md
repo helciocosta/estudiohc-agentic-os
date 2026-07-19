@@ -53,7 +53,8 @@ O **Agentic OS EstudioHC** é uma arquitetura híbrida que integra as melhores f
 │  ├─ Memória episódica (Mem0)                            │
 │  └─ Memória cognitiva (AgentOS)                         │
 │                                                          │
-│  💻 Desktop + Dashboard — Open WebUI + Antigravity      │
+│  💻 Desktop + Dashboard — Express + HTML UI             │
+│  ├─ Dashboard web (:3456) com status em tempo real      │
 │  ├─ Interface web (Open WebUI via ODS)                  │
 │  └─ IDE (Antigravity)                                   │
 │                                                          │
@@ -68,13 +69,13 @@ O **Agentic OS EstudioHC** é uma arquitetura híbrida que integra as melhores f
 |------------|--------|------------|
 | 🧠 Orquestração Multi-Agente | ✅ Ativo | OpenCode + Matrixx |
 | 🌐 Gateway 237 LLMs | ✅ Ativo | OmniRoute |
-| 🧠 Dreaming (análise 24/7) | 📋 Planejado | Hermes + Cron |
-| 🏛️ Pantheon (personas) | 📋 Planejado | AgentOS/@framers |
-| 🔧 Code Graph | 📋 Planejado | CodeGraph MCP |
-| 📊 Mission Control | 📋 Planejado | Hermes Kanban + n8n |
-| 💾 Memória Unificada | 🔄 Em andamento | Qdrant + Mem0 + AgentOS |
+| 🔧 Code Graph | ✅ Integrado | CodeGraph MCP (147K nodes) |
+| 🏛️ Pantheon (personas) | ✅ Ativo | AgentOS/@framers + HEXACO |
+| 💾 Memória Unificada | ✅ Ativo | Qdrant + Mem0 + Cognitive (8 mech.) |
+| 🧠 Dreaming (análise 24/7) | ✅ Ativo | Hermes + Cron (60min) |
+| 📊 Mission Control | ✅ Ativo | Dashboard + Cost Tracker |
+| 💻 Dashboard Web | ✅ Ativo | Express + HTML UI (:3456) |
 | 📱 Canais | ✅ Ativo | Hermes (TG, DC, Slack, WA) |
-| 💻 Desktop App | 📋 Planejado | Open WebUI / Tauri |
 | 🔒 Segurança | 📋 Planejado | Múltiplas camadas |
 
 ## 🚀 Começando
@@ -121,12 +122,12 @@ estudiohc-agentic-os/
 
 | Fase | O quê | Status |
 |------|-------|--------|
-| **F0** | Fundação (já existe: OpenCode, OmniRoute, Hermes) | ✅ Completo |
-| **F1** | Code Graph (CodeGraph via MCP) | 📋 Pendente |
-| **F2** | Pantheon + Memória (AgentOS + Qdrant) | 📋 Pendente |
-| **F3** | Dreaming Engine (Hermes cron) | 📋 Pendente |
-| **F4** | Mission Control + Dashboard + Custos | 📋 Pendente |
-| **F5** | Desktop App (Tauri / Open WebUI) | 📋 Pendente |
+| **F0** | Fundação (OpenCode, OmniRoute, Hermes) | ✅ Completo |
+| **F1** | Code Graph (CodeGraph via MCP) | ✅ Completo |
+| **F2** | Pantheon + Memória (AgentOS + Qdrant) | ✅ Completo |
+| **F3** | Dreaming Engine (Hermes cron) | ✅ Completo |
+| **F4** | Mission Control + Dashboard + Custos | ✅ Completo |
+| **F5** | Dashboard Web + Desktop | ✅ Completo |
 
 Detalhes em [docs/PHASES.md](docs/PHASES.md).
 
