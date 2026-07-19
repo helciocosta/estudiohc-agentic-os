@@ -21,5 +21,8 @@
   "bugs": {
     "url": "https://github.com/helciocosta/estudiohc-agentic-os/issues"
   },
-  "homepage": "https://estudiohc.com"
+  "homepage": "https://estudiohc.com",
+  "dependencies": {
+    "@framers/agentos": "^0.9.156"
+  }
 }
