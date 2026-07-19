@@ -5,47 +5,66 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Agentic OS — EstudioHC</title>
 <style>
-:root { --bg: #0a0a0f; --card: #12121a; --border: #1e1e2e; --text: #c0c0d0; --dim: #606080; --green: #50fa7b; --red: #ff5555; --yellow: #f1fa8c; --blue: #61affe; --accent: #9580ff; }
-[data-theme="light"] { --bg: #f5f5f8; --card: #ffffff; --border: #e0e0ec; --text: #1a1a2e; --dim: #80809a; --green: #2ecc71; --red: #e74c3c; --yellow: #f39c12; --blue: #3498db; --accent: #6c5ce7; }
+:root { --bg: #0a0a0f; --card: #12121a; --border: #1e1e2e; --text: #c0c0d0; --dim: #606080; --green: #50fa7b; --red: #ff5555; --yellow: #f1fa8c; --blue: #61affe; --accent: #9580ff; --chat-bg: #0d0d14; }
+[data-theme="light"] { --bg: #f5f5f8; --card: #ffffff; --border: #e0e0ec; --text: #1a1a2e; --dim: #80809a; --green: #2ecc71; --red: #e74c3c; --yellow: #f39c12; --blue: #3498db; --accent: #6c5ce7; --chat-bg: #f0f0f5; }
 * { margin: 0; padding: 0; box-sizing: border-box; }
-body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'SF Mono', monospace; background: var(--bg); color: var(--text); padding: 20px; }
-.container { max-width: 1200px; margin: 0 auto; }
-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; flex-wrap: wrap; gap: 12px; }
-header h1 { font-size: 1.5rem; font-weight: 700; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'SF Mono', monospace; background: var(--bg); color: var(--text); height: 100vh; display: flex; flex-direction: column; }
+.container { max-width: 1400px; margin: 0 auto; padding: 12px 20px; width: 100%; flex: 1; display: flex; flex-direction: column; }
+header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-shrink: 0; }
+header h1 { font-size: 1.2rem; font-weight: 700; }
 header h1 span { color: var(--accent); }
-.header-right { display: flex; align-items: center; gap: 16px; font-size: 0.85rem; }
-.theme-toggle { cursor: pointer; background: var(--card); border: 1px solid var(--border); color: var(--text); padding: 4px 12px; border-radius: 6px; font-size: 0.8rem; }
-.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 12px; margin-bottom: 20px; }
-.card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 16px; transition: border-color 0.2s; }
-.card:hover { border-color: var(--accent); }
-.card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
-.card-title { font-weight: 600; font-size: 0.9rem; }
-.badge { font-size: 0.7rem; padding: 2px 8px; border-radius: 10px; font-weight: 600; }
-.badge.online { background: rgba(80,250,123,0.15); color: var(--green); }
-.badge.offline { background: rgba(255,85,85,0.15); color: var(--red); }
-.badge.timeout { background: rgba(241,250,140,0.15); color: var(--yellow); }
-.card-meta { font-size: 0.8rem; color: var(--dim); }
-.card-value { font-size: 1.6rem; font-weight: 700; margin-top: 4px; }
-.card-value small { font-size: 0.8rem; font-weight: 400; color: var(--dim); }
-.section-title { font-size: 1.1rem; font-weight: 600; margin: 20px 0 12px; padding-bottom: 8px; border-bottom: 1px solid var(--border); }
-.row { display: flex; gap: 20px; flex-wrap: wrap; }
-.row > * { flex: 1; min-width: 300px; }
-table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
-th, td { padding: 6px 8px; text-align: left; border-bottom: 1px solid var(--border); }
-th { color: var(--dim); font-weight: 500; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; }
-td:last-child, th:last-child { text-align: right; }
-tr:hover td { background: rgba(255,255,255,0.02); }
-.dream-card { margin-bottom: 12px; }
-.dream-card .title { font-weight: 600; font-size: 0.95rem; color: var(--accent); }
-.dream-card .meta { font-size: 0.75rem; color: var(--dim); margin: 4px 0; }
-.dream-card .summary { font-size: 0.85rem; line-height: 1.5; }
-.error { color: var(--red); font-size: 0.85rem; }
-.loading { color: var(--dim); font-style: italic; font-size: 0.85rem; }
-.links { display: flex; gap: 8px; flex-wrap: wrap; margin: 16px 0; }
-.links a { color: var(--blue); text-decoration: none; font-size: 0.85rem; padding: 6px 14px; background: var(--card); border: 1px solid var(--border); border-radius: 8px; transition: all 0.2s; }
-.links a:hover { border-color: var(--blue); background: rgba(97,175,254,0.1); }
-footer { text-align: center; padding: 24px 0; font-size: 0.75rem; color: var(--dim); }
-@media (max-width: 600px) { .grid { grid-template-columns: 1fr 1fr; } header { flex-direction: column; align-items: flex-start; } }
+.header-right { display: flex; align-items: center; gap: 12px; font-size: 0.8rem; }
+.theme-toggle { cursor: pointer; background: var(--card); border: 1px solid var(--border); color: var(--text); padding: 3px 10px; border-radius: 6px; font-size: 0.75rem; }
+.status-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 4px; }
+.status-dot.online { background: var(--green); }
+.status-dot.offline { background: var(--red); }
+.tabs { display: flex; gap: 0; border-bottom: 1px solid var(--border); margin-bottom: 12px; flex-shrink: 0; }
+.tab { padding: 8px 20px; cursor: pointer; border: 1px solid transparent; border-bottom: none; border-radius: 8px 8px 0 0; color: var(--dim); font-size: 0.85rem; font-weight: 500; transition: all 0.2s; background: transparent; }
+.tab:hover { color: var(--text); background: var(--card); }
+.tab.active { color: var(--text); background: var(--card); border-color: var(--border); margin-bottom: -1px; }
+.main-layout { display: flex; gap: 12px; flex: 1; min-height: 0; }
+.chat-panel { flex: 1; display: flex; flex-direction: column; min-width: 0; }
+.chat-header { display: flex; gap: 8px; align-items: center; margin-bottom: 8px; flex-shrink: 0; flex-wrap: wrap; }
+.chat-header select { background: var(--card); color: var(--text); border: 1px solid var(--border); padding: 6px 10px; border-radius: 6px; font-size: 0.85rem; cursor: pointer; }
+.search-toggle { display: flex; align-items: center; gap: 6px; font-size: 0.8rem; cursor: pointer; color: var(--dim); }
+.search-toggle.active { color: var(--blue); }
+.search-toggle input[type="checkbox"] { accent-color: var(--accent); }
+.chat-messages { flex: 1; overflow-y: auto; background: var(--chat-bg); border: 1px solid var(--border); border-radius: 10px; padding: 12px; display: flex; flex-direction: column; gap: 12px; min-height: 0; }
+.msg { max-width: 85%; padding: 10px 14px; border-radius: 12px; font-size: 0.85rem; line-height: 1.5; }
+.msg.user { align-self: flex-end; background: var(--accent); color: #fff; border-bottom-right-radius: 4px; }
+.msg.agent { align-self: flex-start; background: var(--card); border: 1px solid var(--border); border-bottom-left-radius: 4px; }
+.msg .msg-header { font-size: 0.7rem; color: var(--dim); margin-bottom: 4px; display: flex; gap: 6px; align-items: center; }
+.msg .msg-footer { font-size: 0.65rem; color: var(--dim); margin-top: 6px; }
+.msg.error { align-self: center; background: rgba(255,85,85,0.15); color: var(--red); border: 1px solid var(--red); }
+.msg.loading { align-self: center; color: var(--dim); font-style: italic; }
+.chat-input-area { display: flex; gap: 8px; margin-top: 8px; flex-shrink: 0; }
+.chat-input-area input { flex: 1; background: var(--card); color: var(--text); border: 1px solid var(--border); padding: 10px 14px; border-radius: 8px; font-size: 0.85rem; outline: none; }
+.chat-input-area input:focus { border-color: var(--accent); }
+.chat-input-area button { background: var(--accent); color: #fff; border: none; padding: 10px 20px; border-radius: 8px; cursor: pointer; font-size: 0.85rem; font-weight: 600; }
+.chat-input-area button:disabled { opacity: 0.5; cursor: not-allowed; }
+.sidebar { width: 280px; flex-shrink: 0; display: flex; flex-direction: column; gap: 8px; overflow-y: auto; }
+.sidebar-card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 12px; }
+.sidebar-card h3 { font-size: 0.75rem; font-weight: 600; color: var(--dim); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px; }
+.sidebar .service { display: flex; justify-content: space-between; align-items: center; padding: 4px 0; font-size: 0.8rem; }
+.sidebar .service .name { flex: 1; }
+.sidebar .launcher-btn { display: flex; align-items: center; gap: 8px; width: 100%; background: var(--card); border: 1px solid var(--border); color: var(--text); padding: 8px 12px; border-radius: 8px; cursor: pointer; font-size: 0.8rem; transition: all 0.2s; text-decoration: none; }
+.sidebar .launcher-btn:hover { border-color: var(--accent); background: rgba(149,128,255,0.08); }
+.launcher-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; padding: 8px 0; }
+.launcher-item { display: flex; flex-direction: column; background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 16px; text-decoration: none; color: var(--text); transition: all 0.2s; }
+.launcher-item:hover { border-color: var(--accent); transform: translateY(-1px); }
+.launcher-item .icon { font-size: 1.6rem; margin-bottom: 8px; }
+.launcher-item .name { font-weight: 600; font-size: 0.9rem; }
+.launcher-item .desc { font-size: 0.75rem; color: var(--dim); margin-top: 2px; }
+.tab-content { display: none; flex: 1; min-height: 0; }
+.tab-content.active { display: flex; flex-direction: column; }
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+.empty-state { text-align: center; padding: 40px 20px; color: var(--dim); }
+.empty-state .icon { font-size: 2rem; margin-bottom: 8px; }
+.empty-state h3 { font-size: 1rem; margin-bottom: 4px; color: var(--text); }
+.empty-state p { font-size: 0.8rem; }
+@media (max-width: 800px) { .sidebar { display: none; } .main-layout { flex-direction: column; } }
 </style>
 </head>
 <body>
@@ -53,146 +72,195 @@ footer { text-align: center; padding: 24px 0; font-size: 0.75rem; color: var(--d
   <header>
     <h1>🧠 Agentic <span>OS</span></h1>
     <div class="header-right">
-      <span id="timestamp" class="loading">carregando...</span>
+      <span id="status-summary" class="loading">carregando...</span>
       <button class="theme-toggle" onclick="toggleTheme()">🌓</button>
     </div>
   </header>
 
-  <div class="grid" id="services"></div>
+  <div class="tabs">
+    <div class="tab active" data-tab="chat" onclick="switchTab('chat')">💬 Chat</div>
+    <div class="tab" data-tab="launcher" onclick="switchTab('launcher')">🚀 Lançador</div>
+    <div class="tab" data-tab="status" onclick="switchTab('status')">📊 Monitor</div>
+  </div>
 
-  <div class="row">
-    <div class="card">
-      <div class="card-header"><span class="card-title">📊 Uso de Tokens (24h)</span></div>
-      <div id="token-summary" class="loading">carregando...</div>
-    </div>
-    <div class="card">
-      <div class="card-header"><span class="card-title">💰 Custos</span></div>
-      <div id="cost-summary" class="loading">carregando...</div>
+  <!-- Chat -->
+  <div class="tab-content active" id="tab-chat">
+    <div class="main-layout">
+      <div class="chat-panel">
+        <div class="chat-header">
+          <select id="persona-select" onchange="onPersonaChange()"></select>
+          <label class="search-toggle">
+            <input type="checkbox" id="search-toggle"> 🔍 Pesquisar na web
+          </label>
+        </div>
+        <div class="chat-messages" id="chat-messages">
+          <div class="empty-state">
+            <div class="icon">🧠</div>
+            <h3>Agent Hub</h3>
+            <p>Escolha uma persona e comece a conversar</p>
+          </div>
+        </div>
+        <div class="chat-input-area">
+          <input id="chat-input" type="text" placeholder="Mensagem..." onkeydown="if(event.key==='Enter') sendMessage()">
+          <button id="send-btn" onclick="sendMessage()">➤</button>
+        </div>
+      </div>
+      <div class="sidebar">
+        <div class="sidebar-card"><h3>📡 Serviços</h3><div id="sidebar-services"></div></div>
+        <div class="sidebar-card"><h3>⚡ Rápido</h3>
+          <a class="launcher-btn" href="http://localhost:3000" target="_blank">💬 WebUI</a>
+          <a class="launcher-btn" href="http://localhost:8888" target="_blank">🔍 SearXNG</a>
+          <a class="launcher-btn" href="http://localhost:9000" target="_blank">🐳 Portainer</a>
+        </div>
+        <div class="sidebar-card"><h3>💰 Custos</h3><div id="sidebar-cost">...</div></div>
+      </div>
     </div>
   </div>
 
-  <div class="section-title">🧠 Dreams</div>
-  <div id="dreams" class="loading">carregando...</div>
-
-  <div class="section-title">📋 Kanban (Hermes)</div>
-  <div id="kanban" class="loading">carregando...</div>
-
-  <div class="section-title">🏆 Modelos mais usados</div>
-  <div id="models-table"><p class="loading">carregando...</p></div>
-
-  <div class="section-title">🔗 Acesso Rápido</div>
-  <div class="links">
-    <a href="http://localhost:3000" target="_blank">💬 Open WebUI</a>
-    <a href="http://localhost:3001" target="_blank">📊 ODS Dashboard</a>
-    <a href="http://localhost:20128/v1/models" target="_blank">🌐 OmniRoute Models</a>
-    <a href="http://localhost:9000" target="_blank">🐳 Portainer</a>
-    <a href="http://localhost:8888" target="_blank">🔍 SearXNG</a>
+  <!-- Launcher -->
+  <div class="tab-content" id="tab-launcher">
+    <div class="launcher-grid" id="launcher-grid"></div>
   </div>
 
-  <footer>
-    EstudioHC Agentic OS &mdash; <span id="footer-time"></span>
-  </footer>
+  <!-- Status -->
+  <div class="tab-content" id="tab-status">
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px" id="status-grid"></div>
+    <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:12px">
+      <div class="sidebar-card" style="flex:1"><h3>💰 Custos</h3><div id="status-cost"></div></div>
+      <div class="sidebar-card" style="flex:1"><h3>🧠 Dreams</h3><div id="status-dreams"></div></div>
+      <div class="sidebar-card" style="flex:1"><h3>📋 Kanban</h3><div id="status-kanban"></div></div>
+    </div>
+    <div style="margin-top:12px">
+      <div class="sidebar-card"><h3>🏆 Top Modelos</h3><div id="status-models"></div></div>
+    </div>
+  </div>
 </div>
 
 <script>
-const API = '/api/all';
+let PERSONAS = [];
+let loading = false;
 
-function $(id) { return document.getElementById(id); }
-
-async function load() {
-  try {
-    const res = await fetch(API);
-    const data = await res.json();
-    render(data);
-  } catch (e) {
-    $('services').innerHTML = `<div class="card"><span class="error">❌ Erro: ${e.message}</span></div>`;
-  }
+async function init() {
+  await loadPersonas();
+  await loadServices();
+  await loadStatus();
+  initLauncher();
+  setInterval(() => { loadServices(); loadStatus(); }, 15000);
 }
 
-function render(data) {
-  // Timestamp
-  $('timestamp').textContent = new Date(data.timestamp).toLocaleString();
-  $('footer-time').textContent = new Date().toLocaleString();
+async function loadPersonas() {
+  const res = await fetch('/api/personas');
+  PERSONAS = await res.json();
+  const sel = document.getElementById('persona-select');
+  sel.innerHTML = PERSONAS.map(p => `<option value="${p.id}">${p.icon} ${p.name}</option>`).join('');
+  if (PERSONAS[0]) addMessage('agent', `Olá! Sou **${PERSONAS[0].icon} ${PERSONAS[0].name}**. ${PERSONAS[0].description}. Como posso ajudar?`);
+}
 
-  // Services grid
-  $('services').innerHTML = data.services.map(s => `
-    <div class="card">
-      <div class="card-header">
-        <span class="card-title">${s.icon} ${s.name}</span>
-        <span class="badge ${s.status}">${s.status}</span>
-      </div>
-      <div class="card-meta">${s.latency ? s.latency + 'ms' : '—'}</div>
-    </div>
-  `).join('');
+function onPersonaChange() {
+  const id = document.getElementById('persona-select').value;
+  const p = PERSONAS.find(x => x.id === id);
+  if (p) addMessage('agent', `🔄 Troquei para **${p.icon} ${p.name}**. ${p.description}`);
+}
 
-  // Token summary
-  const t = data.tokens;
-  if (t && !t.error) {
-    const inp = (t.tokens_in / 1000).toFixed(1);
-    const out = (t.tokens_out / 1000).toFixed(1);
-    const cost = Number(t.cost).toFixed(4);
-    $('token-summary').innerHTML = `
-      <div class="card-value">${inp}K <small>in</small></div>
-      <div class="card-value">${out}K <small>out</small></div>
-      <div style="margin-top:4px;font-size:0.8rem;color:var(--dim)">${t.sessions} sessões</div>
-    `;
-    $('cost-summary').innerHTML = `
-      <div class="card-value">$${cost}</div>
-      <div style="margin-top:4px;font-size:0.8rem;color:var(--dim)">últimas 24h</div>
-    `;
-  } else {
-    $('token-summary').innerHTML = '<span class="error">indisponível</span>';
-    $('cost-summary').innerHTML = '<span class="error">indisponível</span>';
+async function sendMessage() {
+  const input = document.getElementById('chat-input');
+  const msg = input.value.trim();
+  if (!msg || loading) return;
+  input.value = '';
+  loading = true;
+  document.getElementById('send-btn').disabled = true;
+  const personaId = document.getElementById('persona-select').value;
+  const doSearch = document.getElementById('search-toggle').checked;
+  addMessage('user', msg);
+  const loadId = 'msg-' + Date.now();
+  addMessage('loading', '🔄 pensando...', loadId);
+
+  try {
+    const res = await fetch('/api/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ persona: personaId, message: msg, search: doSearch }),
+    });
+    const data = await res.json();
+    document.getElementById(loadId)?.remove();
+    if (data.error) addMessage('error', `❌ ${data.error}`);
+    else addMessage('agent', data.reply, `${data.searchUsed ? '🔍+🧠' : '🧠'} ${data.tokens} tok`);
+  } catch (e) {
+    document.getElementById(loadId)?.remove();
+    addMessage('error', `❌ ${e.message}`);
   }
+  loading = false;
+  document.getElementById('send-btn').disabled = false;
+  document.getElementById('chat-input').focus();
+}
 
-  // Dreams
-  const dreams = data.dreams || [];
-  if (dreams.length === 0) {
-    $('dreams').innerHTML = '<p class="loading">nenhum dream ainda</p>';
+function addMessage(role, content, extra) {
+  const container = document.getElementById('chat-messages');
+  const empty = container.querySelector('.empty-state');
+  if (empty) empty.remove();
+  const div = document.createElement('div');
+  if (typeof extra === 'string' && role === 'loading') { div.id = extra; }
+  div.className = 'msg ' + role;
+  if (role === 'agent') {
+    const sel = document.getElementById('persona-select');
+    const p = PERSONAS.find(x => x.id === sel.value);
+    div.innerHTML = `<div class="msg-header">${p ? p.icon + ' ' + p.name : '🧠'}</div><div>${content.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br>')}</div>${extra ? '<div class="msg-footer">'+extra+'</div>' : ''}`;
   } else {
-    $('dreams').innerHTML = dreams.map(d => `
-      <div class="dream-card card">
-        <div class="title">${d.title || d.insights?.title || 'Dream'}</div>
-        <div class="meta">${d.date || '?'} &middot; ${d.stats?.sessions || 0} sessões &middot; ${d.stats?.total_messages || 0} mensagens</div>
-        <div class="summary">${(d.insights?.summary || '').substring(0, 200)}</div>
-      </div>
-    `).join('');
+    div.textContent = content;
   }
+  container.appendChild(div);
+  container.scrollTop = container.scrollHeight;
+}
 
-  // Kanban
-  if (data.kanban && !data.kanban.error) {
-    const k = data.kanban;
-    $('kanban').innerHTML = `
-      <div class="row">
-        <div class="card"><div class="card-value">${k.pending} <small>pendentes</small></div></div>
-        <div class="card"><div class="card-value">${k.completed || 0} <small>concluídas</small></div></div>
-        <div class="card"><div class="card-value">${k.total} <small>total</small></div></div>
-      </div>
-    `;
-  } else {
-    $('kanban').innerHTML = '<span class="error">indisponível</span>';
-  }
+async function loadServices() {
+  try {
+    const res = await fetch('/api/status');
+    const d = await res.json();
+    document.getElementById('status-summary').innerHTML = `<span class="status-dot ${d.online===d.total?'online':'offline'}"></span>${d.online}/${d.total}`;
+    document.getElementById('sidebar-services').innerHTML = d.services.map(s => `<div class="service"><span class="status-dot ${s.status}"></span><span class="name">${s.icon} ${s.name}</span><span style="font-size:0.7rem;color:var(--dim)">${s.latency||''}</span></div>`).join('');
+    document.getElementById('status-grid').innerHTML = d.services.map(s => `<div class="sidebar-card"><div style="font-size:1.2rem">${s.icon}</div><div style="font-weight:600;font-size:0.9rem">${s.name}</div><div style="font-size:0.75rem;color:var(--dim)">${s.status==='online'?'🟢':'🔴'} ${s.status}</div></div>`).join('');
+  } catch {}
+}
 
-  // Top models
-  if (data.tokens?.models?.length) {
-    $('models-table').innerHTML = `
-      <div class="card" style="overflow-x:auto">
-      <table>
-        <tr><th>Modelo</th><th>Vezes</th><th>Tokens</th><th>Custo</th></tr>
-        ${data.tokens.models.map(m => `
-          <tr>
-            <td>${(m.model || 'unknown').substring(0, 40)}</td>
-            <td>${m.count}x</td>
-            <td>${(m.tokens / 1000).toFixed(1)}K</td>
-            <td>$${Number(m.cost || 0).toFixed(4)}</td>
-          </tr>
-        `).join('')}
-      </table>
-      </div>
-    `;
-  } else {
-    $('models-table').innerHTML = '<span class="loading">sem dados de modelos</span>';
-  }
+async function loadStatus() {
+  try {
+    const res = await fetch('/api/all');
+    const d = await res.json();
+    if (d.tokens && !d.tokens.error) {
+      const c = `$${Number(d.tokens.cost).toFixed(4)} · ${d.tokens.sessions} sess`;
+      document.getElementById('sidebar-cost').textContent = c;
+      document.getElementById('status-cost').textContent = c;
+    }
+    const dreams = d.dreams || [];
+    document.getElementById('status-dreams').innerHTML = dreams.length ? dreams.map(dd => `<div style="font-size:0.8rem"><strong>${dd.title||'Dream'}</strong><br><span style="color:var(--dim)">${dd.date||'?'}</span></div>`).join('') : 'Nenhum';
+    if (d.kanban) document.getElementById('status-kanban').innerHTML = `<b>${d.kanban.pending}</b> pendentes · <b>${d.kanban.completed||0}</b> concluídas`;
+    if (d.tokens?.models?.length) document.getElementById('status-models').innerHTML = '<table style="width:100%;font-size:0.8rem"><tr><th>Modelo</th><th>#</th><th>Custo</th></tr>'+d.tokens.models.map(m => `<tr><td>${(m.model||'?').substring(0,30)}</td><td>${m.count}x</td><td>$${Number(m.cost||0).toFixed(4)}</td></tr>`).join('')+'</table>';
+  } catch {}
+}
+
+function initLauncher() {
+  document.getElementById('launcher-grid').innerHTML = [
+    {icon:'🧠',name:'OpenCode',desc:'Terminal do agente principal',url:null,action:'terminal'},
+    {icon:'💬',name:'Open WebUI',desc:'Chat com LLMs (ODS)',url:'http://localhost:3000'},
+    {icon:'🔍',name:'SearXNG',desc:'Buscador privado',url:'http://localhost:8888'},
+    {icon:'📊',name:'ODS Dashboard',desc:'Painel ODS',url:'http://localhost:3001'},
+    {icon:'🐳',name:'Portainer',desc:'Gerenciar Docker',url:'http://localhost:9000'},
+    {icon:'🌐',name:'OmniRoute',desc:'309+ modelos',url:'http://localhost:20128/v1/models'},
+    {icon:'📝',name:'Pantheon',desc:'Personas dos agentes',url:null,action:'pantheon'},
+    {icon:'💻',name:'Terminal',desc:'Shell do sistema',action:'terminal'},
+    {icon:'⚙️',name:'Mission Control',desc:'Custos e métricas',action:'mission'},
+    {icon:'🧪',name:'Dream Engine',desc:'Análise de dados',action:'dream'},
+  ].map(item => `<a href="${item.url||'#'}" target="${item.url?'_blank':''}" class="launcher-item" ${item.action?`onclick="runAction('${item.action}');return false"`:''}><div class="icon">${item.icon}</div><div class="name">${item.name}</div><div class="desc">${item.desc}</div></a>`).join('');
+}
+
+function runAction(action) {
+  window.open('','_blank').document.write('<pre style="background:#000;color:#0f0;padding:20px;font-size:14px;font-family:monospace">Comando: '+action+'\n\nAbra o terminal e execute:\n  npm run '+(action==='mission'?'cost':action==='dream'?'dream':'os:status')+'</pre>');
+}
+
+function switchTab(name) {
+  document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', t.dataset.tab === name));
+  document.querySelectorAll('.tab-content').forEach(t => t.classList.toggle('active', t.id === 'tab-' + name));
+  if (name === 'chat') document.getElementById('chat-input').focus();
 }
 
 function toggleTheme() {
@@ -200,9 +268,8 @@ function toggleTheme() {
   html.setAttribute('data-theme', html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
 }
 
-// Auto-refresh every 30s
-load();
-setInterval(load, 30000);
+document.addEventListener('keydown', e => { if (e.ctrlKey && e.key === 'k') { e.preventDefault(); document.getElementById('chat-input').focus(); } });
+init();
 </script>
 </body>
 </html>

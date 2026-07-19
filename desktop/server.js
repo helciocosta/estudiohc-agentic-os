@@ -225,16 +225,21 @@ async function startWebServer(port) {
   const express = (await import('express')).default;
   const app = express();
 
+  app.use(express.json());
   app.use(express.static(join(__dirname, 'public')));
 
-  app.get('/api/status', async (req, res) => {
+  function asyncWrap(fn) {
+    return (req, res, next) => fn(req, res, next).catch(next);
+  }
+
+  app.get('/api/status', asyncWrap(async (req, res) => {
     const results = await Promise.all(CHECKS.map(async (c) => {
       const r = await checkService(c);
       return { ...r, id: c.id, icon: c.icon };
     }));
     const online = results.filter(r => r.status === 'online').length;
     res.json({ timestamp: new Date().toISOString(), services: results, online, total: CHECKS.length });
-  });
+  }));
 
   app.get('/api/tokens', (req, res) => {
     const period = parseInt(req.query.since) || 86400000;
@@ -267,10 +272,10 @@ async function startWebServer(port) {
     res.json(getHermesKanban() || { error: 'unavailable' });
   });
 
-  app.get('/api/models', async (req, res) => {
+  app.get('/api/models', asyncWrap(async (req, res) => {
     const data = await getOmniRouteModels();
     res.json(data || { error: 'unavailable' });
-  });
+  }));
 
   app.get('/api/storage', (req, res) => {
     res.json({
@@ -280,7 +285,79 @@ async function startWebServer(port) {
     });
   });
 
-  app.get('/api/all', async (req, res) => {
+  const PERSONAS = {
+    morpheus: { name: 'Morpheus', icon: '🧠', desc: 'Kernel do sistema — orquestração', instructions: 'You are Morpheus — the kernel of the Agentic OS. You orchestrate sub-agents, manage system resources, and ensure all operations align with user goals.' },
+    cipher: { name: 'Cipher', icon: '🔧', desc: 'Engenheiro de DSL — gramáticas, parsers', instructions: 'You are Cipher — the DSL engineer. Expert in textX, ANTLR, tree-sitter, and language engineering.' },
+    oracle: { name: 'Oracle', icon: '🏛️', desc: 'Consultor de arquitetura — design de sistemas', instructions: 'You are Oracle — the architecture consultant. You analyze complex problems and design systems.' },
+    sentinel: { name: 'Sentinel', icon: '🛡️', desc: 'Auditor de segurança — vulnerabilidades', instructions: 'You are Sentinel — the security auditor. Analyze code for vulnerabilities and enforce security best practices.' },
+    trinity: { name: 'Trinity', icon: '🔍', desc: 'Explorador de codebase — grep, navegação', instructions: 'You are Trinity — the codebase explorer. You search and navigate codebases efficiently.' },
+    operator: { name: 'Operator', icon: '📚', desc: 'Bibliotecário — pesquisa docs e OSS', instructions: 'You are Operator — the librarian. You research external libraries, documentation, and open-source implementations.' },
+    niobe: { name: 'Niobe', icon: '🎓', desc: 'Pesquisador — escrita acadêmica, EU grants', instructions: 'You are Niobe — research and EU projects expert. You handle academic writing, grant proposals, and technical leadership.' },
+    zion: { name: 'Zion', icon: '₿', desc: 'Analista crypto — mercados, on-chain', instructions: 'You are Zion — the crypto market specialist. You analyze markets, evaluate trading strategies, and assess on-chain metrics.' },
+  };
+
+  app.get('/api/personas', (req, res) => {
+    const list = Object.entries(PERSONAS).map(([id, p]) => ({ id, icon: p.icon, name: p.name, description: p.desc }));
+    res.json(list);
+  });
+
+  app.post('/api/chat', asyncWrap(async (req, res) => {
+    const { persona: personaId, message, search } = req.body;
+    if (!personaId || !message) return res.status(400).json({ error: 'persona and message required' });
+    const persona = PERSONAS[personaId];
+    if (!persona) return res.status(400).json({ error: `unknown persona: ${personaId}` });
+
+    try {
+      let context = '';
+      if (search) {
+        const searchUrl = `http://localhost:8888/search?q=${encodeURIComponent(message)}&format=json`;
+        const searchRes = await fetch(searchUrl, { signal: AbortSignal.timeout(5000) });
+        if (searchRes.ok) {
+          const data = await searchRes.json();
+          const snippets = (data.results || []).slice(0, 5).map(r => `[${r.title}](${r.url}): ${r.content}`).join('\n');
+          if (snippets) context = `Web search results for "${message}":\n${snippets}\n\n`;
+        }
+      }
+
+      const body = JSON.stringify({
+        model: process.env.HUB_MODEL || 'oc/deepseek-v4-flash-free',
+        messages: [
+          { role: 'system', content: `${persona.instructions}\n\nYou are ${persona.name}, part of the Agentic OS EstudioHC. Be concise and helpful.` },
+          ...(context ? [{ role: 'system', content: context }] : []),
+          { role: 'user', content: message }
+        ],
+        stream: false,
+        max_tokens: 2048,
+      });
+
+      const omniRes = await fetch('http://localhost:20128/v1/chat/completions', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${process.env.OMNIROUTE_API_KEY || 'sk-local-dev'}` },
+        body,
+        signal: AbortSignal.timeout(60000),
+      });
+
+      if (!omniRes.ok) {
+        const errText = await omniRes.text().catch(() => 'unknown');
+        return res.status(502).json({ error: `OmniRoute error: ${omniRes.status}`, detail: errText.substring(0, 200) });
+      }
+
+      const data = await omniRes.json();
+      const reply = data.choices?.[0]?.message?.content || 'Sem resposta';
+      const usage = data.usage || {};
+
+      res.json({
+        reply,
+        model: data.model || 'unknown',
+        tokens: usage.total_tokens || (usage.prompt_tokens || 0) + (usage.completion_tokens || 0),
+        searchUsed: !!search,
+      });
+    } catch (e) {
+      res.status(500).json({ error: e.message });
+    }
+  }));
+
+  app.get('/api/all', asyncWrap(async (req, res) => {
     const [statusResult, modelsResult] = await Promise.all([
       Promise.all(CHECKS.map(async (c) => {
         const r = await checkService(c);
@@ -304,6 +381,11 @@ async function startWebServer(port) {
         codegraph: getCodeGraphInfo(),
       },
     });
+  }));
+
+  app.use((err, req, res, next) => {
+    console.error('Unhandled error:', err?.message || err);
+    if (!res.headersSent) res.status(500).json({ error: err?.message || 'Internal error' });
   });
 
   app.listen(port, () => {
