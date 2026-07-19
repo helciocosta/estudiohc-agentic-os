@@ -1,0 +1,15 @@
+{
+  "name": "estudiohc-agentic-os-desktop",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "start:web": "node server.js --web --port 3456",
+    "dev": "node server.js --web --port 3456 --open"
+  },
+  "dependencies": {
+    "express": "^4.21.0",
+    "better-sqlite3": "^11.0.0"
+  }
+}

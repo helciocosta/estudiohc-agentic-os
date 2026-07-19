@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Agentic OS — EstudioHC</title>
+<style>
+:root { --bg: #0a0a0f; --card: #12121a; --border: #1e1e2e; --text: #c0c0d0; --dim: #606080; --green: #50fa7b; --red: #ff5555; --yellow: #f1fa8c; --blue: #61affe; --accent: #9580ff; }
+[data-theme="light"] { --bg: #f5f5f8; --card: #ffffff; --border: #e0e0ec; --text: #1a1a2e; --dim: #80809a; --green: #2ecc71; --red: #e74c3c; --yellow: #f39c12; --blue: #3498db; --accent: #6c5ce7; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'SF Mono', monospace; background: var(--bg); color: var(--text); padding: 20px; }
+.container { max-width: 1200px; margin: 0 auto; }
+header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; flex-wrap: wrap; gap: 12px; }
+header h1 { font-size: 1.5rem; font-weight: 700; }
+header h1 span { color: var(--accent); }
+.header-right { display: flex; align-items: center; gap: 16px; font-size: 0.85rem; }
+.theme-toggle { cursor: pointer; background: var(--card); border: 1px solid var(--border); color: var(--text); padding: 4px 12px; border-radius: 6px; font-size: 0.8rem; }
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 12px; margin-bottom: 20px; }
+.card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 16px; transition: border-color 0.2s; }
+.card:hover { border-color: var(--accent); }
+.card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+.card-title { font-weight: 600; font-size: 0.9rem; }
+.badge { font-size: 0.7rem; padding: 2px 8px; border-radius: 10px; font-weight: 600; }
+.badge.online { background: rgba(80,250,123,0.15); color: var(--green); }
+.badge.offline { background: rgba(255,85,85,0.15); color: var(--red); }
+.badge.timeout { background: rgba(241,250,140,0.15); color: var(--yellow); }
+.card-meta { font-size: 0.8rem; color: var(--dim); }
+.card-value { font-size: 1.6rem; font-weight: 700; margin-top: 4px; }
+.card-value small { font-size: 0.8rem; font-weight: 400; color: var(--dim); }
+.section-title { font-size: 1.1rem; font-weight: 600; margin: 20px 0 12px; padding-bottom: 8px; border-bottom: 1px solid var(--border); }
+.row { display: flex; gap: 20px; flex-wrap: wrap; }
+.row > * { flex: 1; min-width: 300px; }
+table { width: 100%; border-collapse: collapse; font-size: 0.85rem; }
+th, td { padding: 6px 8px; text-align: left; border-bottom: 1px solid var(--border); }
+th { color: var(--dim); font-weight: 500; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; }
+td:last-child, th:last-child { text-align: right; }
+tr:hover td { background: rgba(255,255,255,0.02); }
+.dream-card { margin-bottom: 12px; }
+.dream-card .title { font-weight: 600; font-size: 0.95rem; color: var(--accent); }
+.dream-card .meta { font-size: 0.75rem; color: var(--dim); margin: 4px 0; }
+.dream-card .summary { font-size: 0.85rem; line-height: 1.5; }
+.error { color: var(--red); font-size: 0.85rem; }
+.loading { color: var(--dim); font-style: italic; font-size: 0.85rem; }
+.links { display: flex; gap: 8px; flex-wrap: wrap; margin: 16px 0; }
+.links a { color: var(--blue); text-decoration: none; font-size: 0.85rem; padding: 6px 14px; background: var(--card); border: 1px solid var(--border); border-radius: 8px; transition: all 0.2s; }
+.links a:hover { border-color: var(--blue); background: rgba(97,175,254,0.1); }
+footer { text-align: center; padding: 24px 0; font-size: 0.75rem; color: var(--dim); }
+@media (max-width: 600px) { .grid { grid-template-columns: 1fr 1fr; } header { flex-direction: column; align-items: flex-start; } }
+</style>
+</head>
+<body>
+<div class="container">
+  <header>
+    <h1>🧠 Agentic <span>OS</span></h1>
+    <div class="header-right">
+      <span id="timestamp" class="loading">carregando...</span>
+      <button class="theme-toggle" onclick="toggleTheme()">🌓</button>
+    </div>
+  </header>
+
+  <div class="grid" id="services"></div>
+
+  <div class="row">
+    <div class="card">
+      <div class="card-header"><span class="card-title">📊 Uso de Tokens (24h)</span></div>
+      <div id="token-summary" class="loading">carregando...</div>
+    </div>
+    <div class="card">
+      <div class="card-header"><span class="card-title">💰 Custos</span></div>
+      <div id="cost-summary" class="loading">carregando...</div>
+    </div>
+  </div>
+
+  <div class="section-title">🧠 Dreams</div>
+  <div id="dreams" class="loading">carregando...</div>
+
+  <div class="section-title">📋 Kanban (Hermes)</div>
+  <div id="kanban" class="loading">carregando...</div>
+
+  <div class="section-title">🏆 Modelos mais usados</div>
+  <div id="models-table"><p class="loading">carregando...</p></div>
+
+  <div class="section-title">🔗 Acesso Rápido</div>
+  <div class="links">
+    <a href="http://localhost:3000" target="_blank">💬 Open WebUI</a>
+    <a href="http://localhost:3001" target="_blank">📊 ODS Dashboard</a>
+    <a href="http://localhost:20128/v1/models" target="_blank">🌐 OmniRoute Models</a>
+    <a href="http://localhost:9000" target="_blank">🐳 Portainer</a>
+    <a href="http://localhost:8888" target="_blank">🔍 SearXNG</a>
+  </div>
+
+  <footer>
+    EstudioHC Agentic OS &mdash; <span id="footer-time"></span>
+  </footer>
+</div>
+
+<script>
+const API = '/api/all';
+
+function $(id) { return document.getElementById(id); }
+
+async function load() {
+  try {
+    const res = await fetch(API);
+    const data = await res.json();
+    render(data);
+  } catch (e) {
+    $('services').innerHTML = `<div class="card"><span class="error">❌ Erro: ${e.message}</span></div>`;
+  }
+}
+
+function render(data) {
+  // Timestamp
+  $('timestamp').textContent = new Date(data.timestamp).toLocaleString();
+  $('footer-time').textContent = new Date().toLocaleString();
+
+  // Services grid
+  $('services').innerHTML = data.services.map(s => `
+    <div class="card">
+      <div class="card-header">
+        <span class="card-title">${s.icon} ${s.name}</span>
+        <span class="badge ${s.status}">${s.status}</span>
+      </div>
+      <div class="card-meta">${s.latency ? s.latency + 'ms' : '—'}</div>
+    </div>
+  `).join('');
+
+  // Token summary
+  const t = data.tokens;
+  if (t && !t.error) {
+    const inp = (t.tokens_in / 1000).toFixed(1);
+    const out = (t.tokens_out / 1000).toFixed(1);
+    const cost = Number(t.cost).toFixed(4);
+    $('token-summary').innerHTML = `
+      <div class="card-value">${inp}K <small>in</small></div>
+      <div class="card-value">${out}K <small>out</small></div>
+      <div style="margin-top:4px;font-size:0.8rem;color:var(--dim)">${t.sessions} sessões</div>
+    `;
+    $('cost-summary').innerHTML = `
+      <div class="card-value">$${cost}</div>
+      <div style="margin-top:4px;font-size:0.8rem;color:var(--dim)">últimas 24h</div>
+    `;
+  } else {
+    $('token-summary').innerHTML = '<span class="error">indisponível</span>';
+    $('cost-summary').innerHTML = '<span class="error">indisponível</span>';
+  }
+
+  // Dreams
+  const dreams = data.dreams || [];
+  if (dreams.length === 0) {
+    $('dreams').innerHTML = '<p class="loading">nenhum dream ainda</p>';
+  } else {
+    $('dreams').innerHTML = dreams.map(d => `
+      <div class="dream-card card">
+        <div class="title">${d.title || d.insights?.title || 'Dream'}</div>
+        <div class="meta">${d.date || '?'} &middot; ${d.stats?.sessions || 0} sessões &middot; ${d.stats?.total_messages || 0} mensagens</div>
+        <div class="summary">${(d.insights?.summary || '').substring(0, 200)}</div>
+      </div>
+    `).join('');
+  }
+
+  // Kanban
+  if (data.kanban && !data.kanban.error) {
+    const k = data.kanban;
+    $('kanban').innerHTML = `
+      <div class="row">
+        <div class="card"><div class="card-value">${k.pending} <small>pendentes</small></div></div>
+        <div class="card"><div class="card-value">${k.completed || 0} <small>concluídas</small></div></div>
+        <div class="card"><div class="card-value">${k.total} <small>total</small></div></div>
+      </div>
+    `;
+  } else {
+    $('kanban').innerHTML = '<span class="error">indisponível</span>';
+  }
+
+  // Top models
+  if (data.tokens?.models?.length) {
+    $('models-table').innerHTML = `
+      <div class="card" style="overflow-x:auto">
+      <table>
+        <tr><th>Modelo</th><th>Vezes</th><th>Tokens</th><th>Custo</th></tr>
+        ${data.tokens.models.map(m => `
+          <tr>
+            <td>${(m.model || 'unknown').substring(0, 40)}</td>
+            <td>${m.count}x</td>
+            <td>${(m.tokens / 1000).toFixed(1)}K</td>
+            <td>$${Number(m.cost || 0).toFixed(4)}</td>
+          </tr>
+        `).join('')}
+      </table>
+      </div>
+    `;
+  } else {
+    $('models-table').innerHTML = '<span class="loading">sem dados de modelos</span>';
+  }
+}
+
+function toggleTheme() {
+  const html = document.documentElement;
+  html.setAttribute('data-theme', html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark');
+}
+
+// Auto-refresh every 30s
+load();
+setInterval(load, 30000);
+</script>
+</body>
+</html>
