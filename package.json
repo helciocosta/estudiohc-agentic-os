@@ -1,0 +1,25 @@
+{
+  "name": "estudiohc-agentic-os",
+  "version": "0.1.0",
+  "description": "Agentic OS EstudioHC — Arquitetura Híbrida de Orquestração Inteligente de Agentes",
+  "private": true,
+  "scripts": {
+    "status": "node scripts/status.js",
+    "f1:codegraph": "cd code-graph && npm run setup",
+    "f2:pantheon": "cd agents && npm run setup-pantheon",
+    "f3:dreaming": "cd dreaming && npm run setup",
+    "f4:mission": "cd mission-control && npm run setup",
+    "docs": "cat docs/ARCHITECTURE.md"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/helciocosta/estudiohc-agentic-os.git"
+  },
+  "keywords": ["agentic-os", "ai-agents", "orchestration", "estudiohc"],
+  "author": "Helcio Costa <helciocosta@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/helciocosta/estudiohc-agentic-os/issues"
+  },
+  "homepage": "https://estudiohc.com"
+}
