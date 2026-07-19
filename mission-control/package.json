@@ -1,0 +1,17 @@
+{
+  "name": "estudiohc-mission-control",
+  "version": "0.1.0",
+  "description": "Mission Control — Kanban, custos, status e automação",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "status": "node dashboard.js",
+    "costs": "node cost-tracker.js",
+    "models": "node model-catalog.js",
+    "report": "node dashboard.js --full",
+    "kanban": "node kanban.js"
+  },
+  "dependencies": {
+    "better-sqlite3": "^11.10.0"
+  }
+}

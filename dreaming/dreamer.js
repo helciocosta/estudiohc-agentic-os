@@ -16,8 +16,8 @@ import { readFileSync, writeFileSync, mkdirSync, existsSync, readdirSync } from 
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 import os from 'os';
-import Database from 'better-sqlite3';
 import { agent } from '@framers/agentos';
+import Database from 'better-sqlite3';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
